@@ -68,13 +68,8 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
           if (!_controller.value.isInitialized) {
             return;
           }
-          try {
-            final image = await _controller.takePicture();
-            final bytes = await image.readAsBytes();
-            final base64String = base64Encode(bytes);
-            print(base64String);
-            print("Listening!");
 
+          try {
             bool isListening = await _speech.initialize();
             if (!isListening) {
               print('Failed to start listening for speech.');
@@ -82,16 +77,26 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
             }
 
             // Listen for speech input
-            _speech.listen(
+            await _speech.listen(
               onResult: (result) {
                 setState(() {
                   _text = result.recognizedWords;
                 });
               },
             );
+            // Wait for speech to text process to complete
+            while (_text == null) {
+              await Future.delayed(Duration(milliseconds: 100));
+            }
             print(_text);
-            VisionHelpers.sendImageToServer(
-                base64String, _text); // You can use this base64String as needed
+
+            // Take picture after speech to text process is complete
+            final image = await _controller.takePicture();
+            final bytes = await image.readAsBytes();
+            final base64String = base64Encode(bytes);
+            print(base64String);
+            VisionHelpers.sendImageToServer(base64String, _text); // You can use this base64String as needed
+
             setState(() {
               _imageFile = image;
             });
