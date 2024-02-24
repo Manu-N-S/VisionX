@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_tts/flutter_tts.dart';
 
+
 class VisionHelpers {
   static Future<void> sendImageToServer(
       String base64String, String prompt) async {
