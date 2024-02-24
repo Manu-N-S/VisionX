@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:servista/interaction_mode.dart';
+import 'package:servista/object_tracking.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 void main() {
@@ -82,6 +84,16 @@ class _MicrophonePageState extends State<MicrophonePage> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
+            if (_text.toLowerCase() == 'object tracking') {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ObjectTrackingPage()));
+            } else if (_text.toLowerCase() == 'interaction mode') {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InteractionMode()));
+            }
+            _text = 'Press the button and start speaking';
           }),
         );
       }
