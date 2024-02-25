@@ -1,4 +1,4 @@
-# Sensify-AI
+# Sensify.AI
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-v2.10.0-blue.svg)](https://flutter.dev/docs/get-started/install)
 [![Dart Version](https://img.shields.io/badge/Dart-v2.14.0-blue.svg)](https://dart.dev/get-dart)
@@ -53,7 +53,7 @@ Now that you have the project and its dependencies installed, you can run the ap
     ```bash
     flutter run 
 
-# Sensify-AI - Backend
+# Sensify.AI - Backend
 
 ## Overview
 
