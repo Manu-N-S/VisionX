@@ -68,9 +68,6 @@ Llava7B is a versatile multi-model AI designed for extracting features from both
 2. **Feature Extraction:**
    - Identify patterns, structures, and relevant information in input data for valuable insights.
 
-3. **Scalability:**
-   - Optimal performance for handling large volumes of data, ensuring efficiency and responsiveness.
-
-4. **Easy Integration:**
+3. **Easy Integration:**
    - Simple API for seamless integration into existing projects, minimizing development effort.
 
