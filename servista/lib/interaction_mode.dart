@@ -7,7 +7,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 
 class InteractionMode extends StatefulWidget {
   const InteractionMode({Key? key}) : super(key: key);
-  
 
   @override
   State<InteractionMode> createState() => _InteractionModeState();
@@ -26,6 +25,7 @@ class _InteractionModeState extends State<InteractionMode> {
     super.initState();
     _initializeCamera();
   }
+
   FlutterTts flutterTts = FlutterTts();
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
@@ -74,20 +74,17 @@ class _InteractionModeState extends State<InteractionMode> {
             ),
       floatingActionButton: GestureDetector(
         onLongPressStart: (details) {
-          if(!recorded){
+          if (!recorded) {
             _startListening();
             recorded = true;
-          }
-          else{
+          } else {
             stop = true;
           }
-          
         },
         onLongPressEnd: (details) {
-          if(!recorded){
+          if (!recorded) {
             _stopListening();
           }
-          
         },
         child: const FloatingActionButton(
           onPressed: null,
@@ -162,7 +159,7 @@ class _InteractionModeState extends State<InteractionMode> {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final String outputText = responseData['output'] ??
             ""; // Get the value associated with the key 'output'
-        
+
         print(outputText);
         await flutterTts.speak(outputText);
       } else {

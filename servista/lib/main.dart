@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:servista/interaction_mode.dart';
 import 'package:servista/object_tracking.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:flutter_tts/flutter_tts.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,6 +29,7 @@ class MicrophonePage extends StatefulWidget {
 }
 
 class _MicrophonePageState extends State<MicrophonePage> {
+  final FlutterTts flutterTts = FlutterTts();
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
@@ -35,7 +37,14 @@ class _MicrophonePageState extends State<MicrophonePage> {
   @override
   void initState() {
     super.initState();
+    _speakWelcome();
     _speech = stt.SpeechToText();
+  }
+
+  Future<void> _speakWelcome() async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak("Welcome to Sensify A I. What can I do for you?");
   }
 
   @override
