@@ -157,7 +157,7 @@ class _InteractionModeState extends State<InteractionMode> {
 
   Future<void> _sendImageToServer(String base64Image) async {
     const String apiUrl =
-        'http://192.168.63.214:8000/objfind'; // Replace with your API URL
+        'http://192.168.29.104:8000/objfind'; // Replace with your API URL
     try {
       final http.Response response = await http.post(
         Uri.parse(apiUrl),

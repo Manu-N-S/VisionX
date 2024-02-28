@@ -69,10 +69,10 @@ class _MicrophonePageState extends State<MicrophonePage> {
                         MaterialPageRoute(builder: (context) => MapMode()));
                   },
                   child: const CircleAvatar(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.green,
                     radius: 55,
                     child: Icon(
-                      Icons.map,
+                      Icons.navigation,
                       color: Colors.white,
                       size: 50,
                     ),
