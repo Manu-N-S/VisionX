@@ -28,11 +28,13 @@ class _InteractionModeState extends State<InteractionMode> {
     _initializeCamera();
     _speakWelcome();
   }
+
   Future<void> _speakWelcome() async {
     await flutterTts.setLanguage('en-US');
     await flutterTts.setPitch(1.0);
     await flutterTts.speak("Object Tracking Mode Activated");
   }
+
   FlutterTts flutterTts = FlutterTts();
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
@@ -77,9 +79,8 @@ class _InteractionModeState extends State<InteractionMode> {
               ),
             ),
       floatingActionButton: GestureDetector(
-        
         onLongPressStart: (details) {
-           Vibrate.feedback(FeedbackType.heavy);
+          Vibrate.feedback(FeedbackType.heavy);
           if (!recorded) {
             _startListening();
             recorded = true;
@@ -94,10 +95,13 @@ class _InteractionModeState extends State<InteractionMode> {
         },
         child: const CircleAvatar(
           radius: 55,
-        
-          child: Icon(Icons.mic,size: 55,),
+          child: Icon(
+            Icons.mic,
+            size: 55,
+          ),
         ),
-      ),floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 

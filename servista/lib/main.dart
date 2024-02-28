@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:servista/interaction_mode.dart';
+import 'package:servista/map_mode.dart';
 import 'package:servista/object_tracking.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_tts/flutter_tts.dart';
@@ -31,7 +32,7 @@ class MicrophonePage extends StatefulWidget {
 
 class _MicrophonePageState extends State<MicrophonePage> {
   final FlutterTts flutterTts = FlutterTts();
-  
+
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
@@ -55,11 +56,30 @@ class _MicrophonePageState extends State<MicrophonePage> {
       appBar: AppBar(
         title: const Text('Sensify.AI'),
       ),
-      body: Center(
-        child: Text(
-          _text,
-          style: const TextStyle(fontSize: 20.0),
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Vibrate.feedback(FeedbackType.heavy);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MapMode()));
+                  },
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: 55,
+                    child: Icon(
+                      Icons.map,
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  ),
+                )),
+          )
+        ],
       ),
       floatingActionButton: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -80,8 +100,11 @@ class _MicrophonePageState extends State<MicrophonePage> {
             child: CircleAvatar(
               backgroundColor: Colors.blue,
               radius: 55,
-              child: Icon(_isListening ? Icons.mic : Icons.mic_none,
-                  color: Colors.white,size: 50,),
+              child: Icon(
+                _isListening ? Icons.mic : Icons.mic_none,
+                color: Colors.white,
+                size: 50,
+              ),
             ),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -96,12 +119,12 @@ class _MicrophonePageState extends State<MicrophonePage> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
-            if (_text.toLowerCase() == 'interaction mode') {
+            if (_text.toLowerCase().contains('interaction mode')) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ObjectTrackingPage()));
-            } else if (_text.toLowerCase() == 'object tracking') {
+            } else if (_text.toLowerCase().contains('object tracking')) {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => InteractionMode()));
             }
