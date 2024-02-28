@@ -30,9 +30,7 @@ class _MapModeState extends State<MapMode> {
       ResolutionPreset.medium,
     ); // Check if flash mode is available
 
-    if (_cameraController.value.flashMode == FlashMode.auto) {
-      _cameraController.setFlashMode(FlashMode.off);
-    }
+    _cameraController.setFlashMode(FlashMode.off);
 
     await _cameraController.initialize();
 
