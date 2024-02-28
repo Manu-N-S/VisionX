@@ -8,7 +8,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class InteractionMode extends StatefulWidget {
-  const InteractionMode({Key? key}) : super(key: key);
+  const InteractionMode({super.key});
 
   @override
   State<InteractionMode> createState() => _InteractionModeState();
@@ -43,13 +43,13 @@ class _InteractionModeState extends State<InteractionMode> {
       firstCamera,
       ResolutionPreset.medium,
     ); // Check if flash mode is available
-    // Check if flash mode is available
+
     if (_cameraController.value.flashMode == FlashMode.auto) {
       _cameraController.setFlashMode(FlashMode.off);
     }
 
     await _cameraController.initialize();
-    // await _cameraController.lockCaptureOrientation(DeviceOrientation.landscapeRight);
+
     setState(() {}); // Refresh UI after camera initialization
   }
 

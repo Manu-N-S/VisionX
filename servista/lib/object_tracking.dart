@@ -7,6 +7,7 @@ import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ObjectTrackingPage extends StatefulWidget {
+  const ObjectTrackingPage({super.key});
   @override
   State<ObjectTrackingPage> createState() => _ObjectTrackingPageState();
 }
@@ -25,11 +26,13 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
     _initializeCamera();
     _speakWelcome();
   }
+
   Future<void> _speakWelcome() async {
     await flutterTts.setLanguage('en-US');
     await flutterTts.setPitch(1.0);
     await flutterTts.speak("Interaction Mode Activated");
   }
+
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
@@ -71,7 +74,7 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-           Vibrate.feedback(FeedbackType.heavy);
+          Vibrate.feedback(FeedbackType.heavy);
           if (!_controller.value.isInitialized) {
             return;
           }
@@ -102,7 +105,8 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
             final bytes = await image.readAsBytes();
             final base64String = base64Encode(bytes);
             print(base64String);
-            VisionHelpers.sendImageToServer(base64String, _text); // You can use this base64String as needed
+            VisionHelpers.sendImageToServer(
+                base64String, _text); // You can use this base64String as needed
 
             setState(() {
               _imageFile = image;
