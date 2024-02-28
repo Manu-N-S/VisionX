@@ -7,7 +7,7 @@ class VisionHelpers {
   static Future<void> sendImageToServer(
       String base64String, String prompt) async {
     const String apiUrl = 'http://192.168.63.214:5000/process_image_and_text';
-    print(base64String);
+    // print(base64String);
     FlutterTts flutterTts = FlutterTts();
     try {
       final http.Response response = await http.post(
@@ -22,7 +22,7 @@ class VisionHelpers {
         final String outputText = responseData['output'] ??
             ""; // Get the value associated with the key 'output'
         
-        print(outputText);
+        //print(outputText);
         await flutterTts.speak(outputText);
       } else {
         // Handle error response from the server

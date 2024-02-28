@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:servista/vision_helpers.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class ObjectTrackingPage extends StatefulWidget {
   @override
@@ -22,8 +23,13 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
   void initState() {
     super.initState();
     _initializeCamera();
+    _speakWelcome();
   }
-
+  Future<void> _speakWelcome() async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak("Interaction Mode Activated");
+  }
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
@@ -53,7 +59,7 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Object Tracking'),
+        title: const Text('Interaction Mode'),
       ),
       body: Column(
         children: [
@@ -65,6 +71,7 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+           Vibrate.feedback(FeedbackType.heavy);
           if (!_controller.value.isInitialized) {
             return;
           }

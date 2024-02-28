@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:servista/interaction_mode.dart';
 import 'package:servista/object_tracking.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
@@ -30,6 +31,7 @@ class MicrophonePage extends StatefulWidget {
 
 class _MicrophonePageState extends State<MicrophonePage> {
   final FlutterTts flutterTts = FlutterTts();
+  
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = 'Press the button and start speaking';
@@ -51,7 +53,7 @@ class _MicrophonePageState extends State<MicrophonePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Microphone Page'),
+        title: const Text('Sensify.AI'),
       ),
       body: Center(
         child: Text(
@@ -63,6 +65,7 @@ class _MicrophonePageState extends State<MicrophonePage> {
           padding: const EdgeInsets.all(20.0),
           child: GestureDetector(
             onTapDown: (details) {
+              Vibrate.feedback(FeedbackType.heavy);
               setState(() {
                 _isListening = true;
                 _listen();
@@ -76,9 +79,9 @@ class _MicrophonePageState extends State<MicrophonePage> {
             },
             child: CircleAvatar(
               backgroundColor: Colors.blue,
-              radius: 35,
+              radius: 55,
               child: Icon(_isListening ? Icons.mic : Icons.mic_none,
-                  color: Colors.white),
+                  color: Colors.white,size: 50,),
             ),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -93,12 +96,12 @@ class _MicrophonePageState extends State<MicrophonePage> {
         _speech.listen(
           onResult: (val) => setState(() {
             _text = val.recognizedWords;
-            if (_text.toLowerCase() == 'object tracking') {
+            if (_text.toLowerCase() == 'interaction mode') {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ObjectTrackingPage()));
-            } else if (_text.toLowerCase() == 'interaction mode') {
+            } else if (_text.toLowerCase() == 'object tracking') {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => InteractionMode()));
             }

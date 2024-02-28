@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class InteractionMode extends StatefulWidget {
   const InteractionMode({Key? key}) : super(key: key);
@@ -24,8 +26,13 @@ class _InteractionModeState extends State<InteractionMode> {
   void initState() {
     super.initState();
     _initializeCamera();
+    _speakWelcome();
   }
-
+  Future<void> _speakWelcome() async {
+    await flutterTts.setLanguage('en-US');
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak("Object Tracking Mode Activated");
+  }
   FlutterTts flutterTts = FlutterTts();
   Future<void> _initializeCamera() async {
     final cameras = await availableCameras();
@@ -40,6 +47,7 @@ class _InteractionModeState extends State<InteractionMode> {
     }
 
     await _cameraController.initialize();
+    // await _cameraController.lockCaptureOrientation(DeviceOrientation.landscapeRight);
     setState(() {}); // Refresh UI after camera initialization
   }
 
@@ -53,7 +61,7 @@ class _InteractionModeState extends State<InteractionMode> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Interaction Mode'),
+        title: const Text('Object Tracking Mode'),
       ),
       body: _isCameraStreaming
           ? CameraPreview(_cameraController)
@@ -65,15 +73,13 @@ class _InteractionModeState extends State<InteractionMode> {
                     _recognizedText,
                     style: const TextStyle(fontSize: 20.0),
                   ),
-                  ElevatedButton(
-                    onPressed: _startCameraStream,
-                    child: const Text('Start Camera Stream'),
-                  ),
                 ],
               ),
             ),
       floatingActionButton: GestureDetector(
+        
         onLongPressStart: (details) {
+           Vibrate.feedback(FeedbackType.heavy);
           if (!recorded) {
             _startListening();
             recorded = true;
@@ -86,11 +92,12 @@ class _InteractionModeState extends State<InteractionMode> {
             _stopListening();
           }
         },
-        child: const FloatingActionButton(
-          onPressed: null,
-          child: Icon(Icons.mic),
+        child: const CircleAvatar(
+          radius: 55,
+        
+          child: Icon(Icons.mic,size: 55,),
         ),
-      ),
+      ),floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
