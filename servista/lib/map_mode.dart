@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_tts/flutter_tts.dart';
 
 class MapMode extends StatefulWidget {
   const MapMode({super.key});
@@ -14,7 +15,7 @@ class MapMode extends StatefulWidget {
 class _MapModeState extends State<MapMode> {
   late CameraController _cameraController;
   bool _isCameraStreaming = false;
-
+  FlutterTts flutterTts = FlutterTts();
   @override
   void initState() {
     super.initState();
@@ -53,15 +54,20 @@ class _MapModeState extends State<MapMode> {
 
   Future<void> _sendImageToServer(String base64Image) async {
     // Replace the URL below with your server endpoint
-    String url = 'http://192.168.29.104:8000/objfind';
+    String url = 'http://1192.168.29.37:8000/objfind';
     try {
       var response = await http.post(
         Uri.parse(url),
-        body: json.encode({'image': base64Image}),
+        body: json.encode({'image': base64Image, 'text': 'nav'}),
         headers: {'Content-Type': 'application/json'},
       );
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.body);
+        String receivedText = responseData['text'];
+        await flutterTts.speak(receivedText);
+      }
     } catch (e) {
       print('Error sending image: $e');
     }

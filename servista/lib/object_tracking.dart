@@ -15,7 +15,7 @@ class ObjectTrackingPage extends StatefulWidget {
 class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
   late CameraController _controller;
   bool _isCameraReady = false;
-  XFile? _imageFile;
+  XFile? imageFile;
   String _text = '';
   final FlutterTts flutterTts = FlutterTts();
   final stt.SpeechToText _speech = stt.SpeechToText();
@@ -109,7 +109,7 @@ class _ObjectTrackingPageState extends State<ObjectTrackingPage> {
                 base64String, _text); // You can use this base64String as needed
 
             setState(() {
-              _imageFile = image;
+              imageFile = image;
             });
           } catch (e) {
             print(e);

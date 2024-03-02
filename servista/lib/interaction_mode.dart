@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_tts/flutter_tts.dart';
@@ -157,7 +157,7 @@ class _InteractionModeState extends State<InteractionMode> {
 
   Future<void> _sendImageToServer(String base64Image) async {
     const String apiUrl =
-        'http://192.168.29.104:8000/objfind'; // Replace with your API URL
+        'http://192.168.29.37:8000/objfind'; // Replace with your API URL
     try {
       final http.Response response = await http.post(
         Uri.parse(apiUrl),
