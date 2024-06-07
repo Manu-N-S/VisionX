@@ -53,7 +53,7 @@ Now that you have the project and its dependencies installed, you can run the ap
     ```bash
     flutter run 
 
-# Sensify.AI - Backend
+# Vision.AI - Backend
 
 ## Overview
 
