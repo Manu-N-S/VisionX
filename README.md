@@ -1,4 +1,4 @@
-# Sensify.AI
+# Vision.AI
 
 [![Flutter Version](https://img.shields.io/badge/Flutter-v2.10.0-blue.svg)](https://flutter.dev/docs/get-started/install)
 [![Dart Version](https://img.shields.io/badge/Dart-v2.14.0-blue.svg)](https://dart.dev/get-dart)
